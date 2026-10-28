@@ -8,11 +8,13 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.spinMotorcmd;
+import frc.robot.commmands.spinMotorRcmd;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.MotorTSubsystem;
+import frc.robot.subsystems.MotorTRSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import esrc/main/java/frc/robot/subsystems/MotorTSubsystem.javan.CommandXboxController;
+import esrc/main/java/frc/robot/subsystems/MotorTSubsystem.javan.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -53,6 +55,7 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.leftTrigger().whileTrue(spinMotorcmd);
+    m_driverController.rightTrigger().whileTrue(spinMotorRcmd)
     
   }
 
