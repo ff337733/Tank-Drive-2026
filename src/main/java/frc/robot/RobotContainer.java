@@ -4,17 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.spinMotorcmd;
-import frc.robot.commmands.spinMotorRcmd;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.MotorTSubsystem;
-import frc.robot.subsystems.MotorTRSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import esrc/main/java/frc/robot/subsystems/MotorTSubsystem.javan.CommandXboxController;
-import esrc/main/java/frc/robot/subsystems/MotorTSubsystem.javan.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,16 +18,20 @@ import esrc/main/java/frc/robot/subsystems/MotorTSubsystem.javan.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
   private final MotorTSubsystem m_MotorTSubsystem = new MotorTSubsystem();
+  private final MotorTSubsystem m_MotorTRSubsystem = new MotorTSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final spinMotorcmd spinMotorcmd = new spinMotorcmd(m_MotorTSubsystem);
+  private final spinMotorcmd spinMotorcmd = new spinMotorcmd(m_MotorTSubsystem, m_driverController);
+  private final spinMotorcmd spinMotorRcmd = new spinMotorcmd(m_MotorTRSubsystem, m_driverController);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    m_MotorTSubsystem.setDefaultCommand(spinMotorcmd);
+    m_MotorTRSubsystem.setDefaultCommand(spinMotorRcmd);
     configureBindings();
   }
 
@@ -48,14 +46,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+  
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.leftTrigger().whileTrue(spinMotorcmd);
-    m_driverController.rightTrigger().whileTrue(spinMotorRcmd)
+  
+    
+    
     
   }
 
@@ -65,8 +62,4 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
 }

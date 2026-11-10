@@ -4,31 +4,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.MotorTSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class spinMotorcmd extends Command {
   /** Creates a new spinMotorcmd. */
   public MotorTSubsystem motorTSubsystem;
-  public spinMotorcmd(MotorTSubsystem motorTSubsystem) {
+  public CommandXboxController xboxcontrollern;
+  public spinMotorcmd(MotorTSubsystem motorTSubsystem, CommandXboxController xboxcontrollern) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.motorTSubsystem = motorTSubsystem;
-    addRequirements(motorTSubsystem);
+    this.xboxcontrollern = xboxcontrollern;
+
     
   }
   
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     motorTSubsystem.motorSpeed();
+     
   }
    
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-         motorTSubsystem.motorSpeed();
+         motorTSubsystem.motorSpeed(xboxcontrollern.getLeftY());
 
   }
     
